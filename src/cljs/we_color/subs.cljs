@@ -16,3 +16,8 @@
   :android
   (fn [db]
     (reaction (:android @db))))
+
+(register-sub
+  :format
+  (fn [db [_ color]]
+    (reaction (-> @db :formats color))))
