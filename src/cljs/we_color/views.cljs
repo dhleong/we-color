@@ -48,7 +48,6 @@
 
 (defn main-panel []
   [:div.container
-   [:h2 "weColor"]
    [:div#colors
     [:div.color.col-md-6
      [color-label :ios :fa-apple]
