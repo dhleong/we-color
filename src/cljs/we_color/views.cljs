@@ -7,6 +7,7 @@
     (fn []
       [:input.color
        {:type :text
+        :id in-type
         :value @v
         :on-change 
         (fn [e]
@@ -18,7 +19,10 @@
   [:div
    [:h2 "weColor"]
    [:div#colors
-    [:div#ios.color
-     [color-field :ios]]
-    [:div#android.color
-     [color-field :android]]]])
+    [:table
+     [:tr#ios-container.color
+      [:td>label.color {:for :ios} "iOS"]
+      [:td [color-field :ios]]]
+     [:tr#android-container.color
+      [:td>label.color {:for :android} "Android"]
+      [:td [color-field :android]]]]]])
