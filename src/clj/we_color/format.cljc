@@ -1,7 +1,7 @@
 (ns ^{:author "Daniel Leong"
       :doc "Color formatting"}
   we-color.format
-  #?(:cljs (:require [goog.string :as gstring]
+  #?(:cljs (:require [goog.string :refer [format]]
                      [goog.string.format])))
 
 ;;

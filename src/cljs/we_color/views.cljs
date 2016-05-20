@@ -15,13 +15,19 @@
             [in-type (-> e .-target .-value)])
           true)}])))
 
+(defn color-label
+  [field-for fa-class]
+  [:div>label.color {:for field-for}
+   [:i.fa.fa-5x
+    {:class fa-class}]])
+
 (defn main-panel []
   [:div.container
    [:h2 "weColor"]
    [:div#colors
-    [:div#ios-container.color.col-md-6
-     [:div>label.color {:for :ios} "iOS"]
+    [:div.color.col-md-6
+     [color-label :ios :fa-apple]
      [color-field :ios]]
-    [:div#android-container.color.col-md-6
-     [:div>label.color {:for :android} "Android"]
+    [:div.color.col-md-6
+     [color-label :android :fa-android]
      [color-field :android]]]])
