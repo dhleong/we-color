@@ -5,7 +5,7 @@
   [in-type]
   (let [v (subscribe [in-type])]
     (fn []
-      [:input.color
+      [:textarea.color
        {:type :text
         :id in-type
         :value @v
@@ -16,13 +16,12 @@
           true)}])))
 
 (defn main-panel []
-  [:div
+  [:div.container
    [:h2 "weColor"]
    [:div#colors
-    [:table
-     [:tr#ios-container.color
-      [:td>label.color {:for :ios} "iOS"]
-      [:td [color-field :ios]]]
-     [:tr#android-container.color
-      [:td>label.color {:for :android} "Android"]
-      [:td [color-field :android]]]]]])
+    [:div#ios-container.color.col-md-6
+     [:div>label.color {:for :ios} "iOS"]
+     [color-field :ios]]
+    [:div#android-container.color.col-md-6
+     [:div>label.color {:for :android} "Android"]
+     [color-field :android]]]])

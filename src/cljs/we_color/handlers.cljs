@@ -8,23 +8,18 @@
 ;; Middleware
 ;;
 
-(defn handle-android
-  [handler]
-  (fn parse-android-handler
-    [db v]
-    (let [raw-color (first v)]
-      (handler
-        db
-        [raw-color (parse-android raw-color)]))))
-
-(defn handle-ios
-  [handler]
-  (fn parse-ios-handler
-    [db v]
-    (let [raw-color (first v)]
-      (handler
-        db
-        [raw-color (parse-ios raw-color)]))))
+(defn handle-with
+  "Generate a color-parsing middleware that uses the 
+  provided parse function"
+  [parser]
+  (fn
+    [handler]
+    (fn parse-handler
+      [db v]
+      (let [raw-color (first v)]
+        (handler
+          db
+          [raw-color (parser raw-color)])))))
 
 ;;
 ;; Handlers
@@ -37,7 +32,7 @@
 
 (register-handler
   :android
-  [trim-v handle-android]
+  [trim-v (handle-with parse-android)]
   (fn [db [android parsed]]
     (assoc db 
            :android android
@@ -45,9 +40,8 @@
 
 (register-handler
   :ios
-  [trim-v handle-ios]
+  [trim-v (handle-with parse-ios)]
   (fn [db [ios parsed]]
-    (println "parsed=" parsed)
     (assoc db 
            :ios ios
            :android (->android parsed))))
