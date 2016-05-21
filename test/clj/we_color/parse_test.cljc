@@ -19,22 +19,25 @@
 
 (deftest parse-android-test
   (testing "Naked number"
-    (let [{:keys [red green blue alpha]}
-          (parse-android "80AABBCC")]
+    (let [[parsed fmt] (parse-android "80AABBCC")
+          {:keys [red green blue alpha]} parsed]
+      (is (= :plain fmt))
       (is (float= 0.5 alpha))
       (is (float= 0.667 red))
       (is (float= 0.733 green))
       (is (float= 0.8 blue))))
   (testing "Hash-tagged"
-    (let [{:keys [red green blue alpha]}
-          (parse-android "#80AABBCC")]
+    (let [[parsed fmt] (parse-android "#80AABBCC")
+          {:keys [red green blue alpha]} parsed]
+      (is (= :hex fmt))
       (is (float= 0.5 alpha))
       (is (float= 0.667 red))
       (is (float= 0.733 green))
       (is (float= 0.8 blue))))
   (testing "Hex int literal"
-    (let [{:keys [red green blue alpha]}
-          (parse-android "0x80AABBCC")]
+    (let [[parsed fmt] (parse-android "0x80AABBCC")
+          {:keys [red green blue alpha]} parsed]
+      (is (= :int fmt))
       (is (float= 0.5 alpha))
       (is (float= 0.667 red))
       (is (float= 0.733 green))
@@ -42,12 +45,27 @@
 
 (deftest parse-ios-test
   (testing "With brackets"
-    (let [{:keys [red green blue alpha]}
+    (let [[parsed fmt]
           (parse-ios
             (str "[UIColor colorWithRed:0.667"
                  " green:0.733"
                  " blue:0.8"
-                 " alpha:0.5]"))]
+                 " alpha:0.5]"))
+          {:keys [red green blue alpha]} parsed]
+      (is (= :objective-c fmt))
+      (is (float= 0.5 alpha))
+      (is (float= 0.667 red))
+      (is (float= 0.733 green))
+      (is (float= 0.8 blue))))
+  (testing "Swift"
+    (let [[parsed fmt]
+          (parse-ios
+            (str "UIColor(red: 0.667"
+                 ", green: 0.733"
+                 ", blue: 0.8"
+                 ", alpha: 0.5)"))
+          {:keys [red green blue alpha]} parsed]
+      (is (= :swift fmt))
       (is (float= 0.5 alpha))
       (is (float= 0.667 red))
       (is (float= 0.733 green))

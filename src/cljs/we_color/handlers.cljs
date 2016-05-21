@@ -19,7 +19,7 @@
       (let [raw-color (first v)]
         (handler
           db
-          [raw-color (parser raw-color)])))))
+          (cons raw-color (parser raw-color)))))))
 
 ;;
 ;; Handlers
@@ -33,21 +33,26 @@
 (register-handler
   :android
   [trim-v (handle-with parse-android)]
-  (fn [db [android parsed]]
-    (println "android changed")
-    (assoc db 
-           :android android
-           :ios (->ios parsed
-                       (-> db :formats :ios)))))
+  (fn [db [android parsed fmt]]
+    (let [ios-fmt (-> db :formats :ios)]
+      (assoc db 
+             :android android
+             :ios (->ios parsed ios-fmt)
+             :formats
+             {:ios ios-fmt
+              :android fmt}))))
 
 (register-handler
   :ios
   [trim-v (handle-with parse-ios)]
-  (fn [db [ios parsed]]
-    (assoc db 
-           :ios ios
-           :android (->android parsed
-                               (-> db :formats :android)))))
+  (fn [db [ios parsed fmt]]
+    (let [and-fmt (-> db :formats :android)]
+      (assoc db 
+             :ios ios
+             :android (->android parsed and-fmt)
+             :formats
+             {:ios fmt
+              :android and-fmt}))))
 
 (register-handler
   :format
