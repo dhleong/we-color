@@ -58,7 +58,6 @@
   :format
   [trim-v]
   (fn [db [platform new-fmt]]
-    (println (assoc-in db [:formats platform] new-fmt))
     (assoc-in db [:formats platform] new-fmt)))
 
 (register-handler
