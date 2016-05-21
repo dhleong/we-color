@@ -1,33 +1,30 @@
-# we-color
+# weColor
 
-A [re-frame](https://github.com/Day8/re-frame) application designed to ... well, that part is up to you.
+*weColor, so you don't have to*
+
+## What?
+
+A [re-frame](https://github.com/Day8/re-frame) application for converting between iOS
+colors, which tend to use decimal fractions, and Android colors, which use hex.
 
 ## Development Mode
 
-### Start Cider from Emacs:
-
-Put this in your Emacs config file:
+Start figwheel with:
 
 ```
-(setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
-```
-
-Navigate to a clojurescript file and start a figwheel REPL with `cider-jack-in-clojurescript` or (`C-c M-J`)
-
-### Run application:
-
-```
-lein clean
-lein figwheel dev
+lein figwheel
 ```
 
 Figwheel will automatically push cljs changes to the browser.
 
 Wait a bit, then browse to [http://localhost:3449](http://localhost:3449).
 
-## Production Build
+For REPL support, I just start a separate REPL with:
 
 ```
-lein clean
-lein cljsbuild once min
+lein repl
 ```
+
+and connect to it using [vim-fireplace](https://github.com/tpope/vim-fireplace). This lets
+me run the tests for [format.cljc](src/clj/we_color/format.cljc) and 
+[parse.cljc](src/clj/we_color/parse.cljc) using the normal fireplace mappings.
