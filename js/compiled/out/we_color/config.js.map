@@ -1,1 +1,0 @@
-{"version":3,"file":"\/Users\/dhleong\/git\/we-color\/resources\/public\/js\/compiled\/out\/we_color\/config.js","sources":["config.cljs?rel=1463713698168"],"lineCount":10,"mappings":";AAAA;;AAEA,AAAKA,+BACMC;AAEX,oBAAMD;AAAN,AACE,AAACE;;AADH","names":["we-color.config\/debug?","js\/goog.DEBUG","cljs.core\/enable-console-print!"]}
